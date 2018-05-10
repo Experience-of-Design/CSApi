@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Owin.Security.Google</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleApplyRedirectContext">
+      <summary>Kontext, který se předá, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Google OpenID.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleApplyRedirectContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.Google.GoogleAuthenticationOptions,Microsoft.Owin.Security.AuthenticationProperties,System.String)">
+      <summary>Vytvoří nový objekt kontextu.</summary>
+      <param name="context">Kontext požadavku OWIN</param>
+      <param name="options">Možnosti middlewaru Google OpenID</param>
+      <param name="properties">Vlastnosti ověřování výzvy</param>
+      <param name="redirectUri">Počáteční identifikátor URI pro přesměrování</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleApplyRedirectContext.Properties">
+      <summary>Získá vlastnosti ověřování výzvy.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleApplyRedirectContext.RedirectUri">
+      <summary>Získá identifikátor URI, který se používá pro operaci přesměrování.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleAuthenticatedContext">
+      <summary>Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticatedContext.#ctor(Microsoft.Owin.IOwinContext,System.Security.Claims.ClaimsIdentity,Microsoft.Owin.Security.AuthenticationProperties,System.Xml.Linq.XElement,System.Collections.Generic.IDictionary{System.String,System.String})">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticatedContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="identity">Objekt <see cref="T:System.Security.Claims.ClaimsIdentity" /> reprezentující uživatele</param>
+      <param name="properties">Kontejner objektů a dat pro běžné vlastnosti ověřování</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticatedContext.AttributeExchangeProperties">
+      <summary>Získá slovník klíčů a hodnot, který je součástí vlastností zpráv.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticatedContext.Identity">
+      <summary>Získá nebo nastaví hodnotu <see cref="T:System.Security.Claims.ClaimsIdentity" />, která představuje uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticatedContext.Properties">
+      <summary>Získá nebo nastaví kontejner objektů a dat pro běžné vlastnosti ověřování.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticatedContext.ResponseMessage">
+      <summary>Získá nebo nastaví analyzovanou zprávu odpovědi z řetězce dotazu openid.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleAuthenticationMiddleware">
+      <summary>Middleware OWIN pro ověřování uživatelů pomocí služby Google OpenID</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticationMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,Owin.IAppBuilder,Microsoft.Owin.Security.Google.GoogleAuthenticationOptions)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticationMiddleware" />.</summary>
+      <param name="next">Další middleware v kanálu OWIN, který má být vyvolán</param>
+      <param name="app">Aplikace OWIN</param>
+      <param name="options">Možnosti konfigurace pro middleware</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticationMiddleware.CreateHandler">
+      <summary>Poskytuje objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> pro zpracování žádostí souvisejících s ověřováním.</summary>
+      <returns>Objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> nakonfigurovaný s objektem <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions" /> zadaným pro konstruktor</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions">
+      <summary>Možnosti konfigurace pro objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticationMiddleware" /></summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.#ctor">
+      <summary>Inicializuje nový objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions" />.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.BackchannelCertificateValidator">
+      <summary>Získá nebo nastaví validátor definovaného certifikátu (Certificate Pinning), který má být použit k ověření koncových bodů použitých při komunikaci používající Back Channel, které patří službě Google.</summary>
+      <returns>Validátor definovaného certifikátu</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.BackchannelHttpHandler">
+      <summary>Objekt HttpMessageHandler používaný ke komunikaci se službou Google.Lze používat současně s BackchannelCertificateValidator, pokud lze hodnotu přetypovat dolů na WebRequestHandler.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.BackchannelTimeout">
+      <summary>Získá nebo nastaví hodnotu časového limitu v milisekundách pro komunikaci se službou Google používající Back Channel.</summary>
+      <returns>Časový limit pro Back Channel</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.CallbackPath">
+      <summary>Cesta žádosti v rámci základní cesty aplikace, kam bude vrácen uživatelský agent.Middleware tuto žádost zpracuje, jakmile bude přijata.Výchozí hodnota je /signin-google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.Caption">
+      <summary>Získá nebo nastaví text, který může uživatel zobrazit v přihlašovacím uživatelském rozhraní.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.Provider">
+      <summary>Získá nebo nastaví třídu <see cref="T:Microsoft.Owin.Security.Google.IGoogleAuthenticationProvider" />, která slouží ke zpracování událostí ověření.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.SignInAsAuthenticationType">
+      <summary>Získá nebo nastaví název jiného ověřovacího middlewaru, který bude odpovědný za vlastní vystavení objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> pro uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationOptions.StateDataFormat">
+      <summary>Získá nebo nastaví typ sloužící k zabezpečení dat zpracovávaných middlewarem.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider">
+      <summary>Výchozí implementace třídy <see cref="T:Microsoft.Owin.Security.Google.IGoogleAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider.#ctor">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Google.GoogleApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Google OpenID.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider.Authenticated(Microsoft.Owin.Security.Google.GoogleAuthenticatedContext)">
+      <summary>Vyvolá se pokaždé, když společnost Google úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider.OnApplyRedirect">
+      <summary>Získá nebo nastaví delegáta, který se volá při volání metody ApplyRedirect.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider.OnAuthenticated">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda Authenticated.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider.OnReturnEndpoint">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda ReturnEndpoint.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Google.GoogleReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleOAuth2ApplyRedirectContext">
+      <summary>Kontext, který se předá, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Google OAuth 2.0.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2ApplyRedirectContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions,Microsoft.Owin.Security.AuthenticationProperties,System.String)">
+      <summary>Vytvoří nový objekt kontextu.</summary>
+      <param name="context">Kontext požadavku OWIN</param>
+      <param name="options">Možnosti middlewaru Google OAuth 2.0</param>
+      <param name="properties">Vlastnosti ověřování výzvy</param>
+      <param name="redirectUri">Počáteční identifikátor URI pro přesměrování</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2ApplyRedirectContext.Properties">
+      <summary>Získá vlastnosti ověřování výzvy.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2ApplyRedirectContext.RedirectUri">
+      <summary>Získá identifikátor URI, který se používá pro operaci přesměrování.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext">
+      <summary>Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.#ctor(Microsoft.Owin.IOwinContext,Newtonsoft.Json.Linq.JObject,System.String,System.String,System.String)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="user">Informace o uživateli služby Google se serializací JSON</param>
+      <param name="accessToken">Přístupový token Google OAuth 2.0</param>
+      <param name="refreshToken">Token obnovení Google OAuth 2.0</param>
+      <param name="expires">Počet sekund do vypršení platnosti</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.AccessToken">
+      <summary>Získá přístupový token služby Google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.Email">
+      <summary>Získá e-mail uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.ExpiresIn">
+      <summary>Získá dobu vypršení platnosti přístupového tokenu služby Google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.FamilyName">
+      <summary>Získá příjmení uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.GivenName">
+      <summary>Získá křestní jméno uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.Id">
+      <summary>Získá ID uživatele služby Google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.Identity">
+      <summary>Získá hodnotu <see cref="T:System.Security.Claims.ClaimsIdentity" /> představující uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.Name">
+      <summary>Získá jméno uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.Profile">
+      <summary>Získá odkaz na profil uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.Properties">
+      <summary>Získá nebo nastaví kontejner objektů a dat pro běžné vlastnosti ověřování.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.RefreshToken">
+      <summary>Získá token obnovení služby Google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext.User">
+      <summary>Získá uživatele se serializací JSON.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationMiddleware">
+      <summary>Middleware OWIN pro ověřování uživatelů pomocí služby Google OAuth 2.0</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,Owin.IAppBuilder,Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationMiddleware" />.</summary>
+      <param name="next">Další middleware v kanálu OWIN, který má být vyvolán</param>
+      <param name="app">Aplikace OWIN</param>
+      <param name="options">Možnosti konfigurace pro middleware</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationMiddleware.CreateHandler">
+      <summary>Poskytuje objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> pro zpracování žádostí souvisejících s ověřováním.</summary>
+      <returns>Objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> nakonfigurovaný s objektem <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions" /> zadaným pro konstruktor</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions">
+      <summary>Možnosti konfigurace pro objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationMiddleware" /></summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.#ctor">
+      <summary>Inicializuje nový objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions" />.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.AccessType">
+      <summary>access_type.Pokud chcete požádat o token obnovení, nastavte hodnotu offline.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.BackchannelCertificateValidator">
+      <summary>Získá nebo nastaví validátor definovaného certifikátu (Certificate Pinning), který má být použit k ověření koncových bodů použitých při komunikaci používající Back Channel, které patří službě Google.</summary>
+      <returns>Validátor definovaného certifikátu</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.BackchannelHttpHandler">
+      <summary>Objekt HttpMessageHandler používaný ke komunikaci se službou Google.Lze používat současně s BackchannelCertificateValidator, pokud lze hodnotu přetypovat dolů na WebRequestHandler.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.BackchannelTimeout">
+      <summary>Získá nebo nastaví hodnotu časového limitu v milisekundách pro komunikaci se službou Google používající Back Channel.</summary>
+      <returns>Časový limit pro Back Channel v milisekundách.</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.CallbackPath">
+      <summary>Cesta žádosti v rámci základní cesty aplikace, kam bude vrácen uživatelský agent.Middleware tuto žádost zpracuje, jakmile bude přijata.Výchozí hodnota je /signin-google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.Caption">
+      <summary>Získá nebo nastaví text, který může uživatel zobrazit v přihlašovacím uživatelském rozhraní.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.ClientId">
+      <summary>Získá nebo nastaví ID klienta přidělené službou Google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.ClientSecret">
+      <summary>Získá nebo nastaví tajný klíč klienta přidělený službou Google.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.Provider">
+      <summary>Získá nebo nastaví třídu <see cref="T:Microsoft.Owin.Security.Google.IGoogleOAuth2AuthenticationProvider" />, která slouží ke zpracování událostí ověření.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.Scope">
+      <summary>Seznam oprávnění k žádosti</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.SignInAsAuthenticationType">
+      <summary>Získá nebo nastaví název jiného ověřovacího middlewaru, který bude odpovědný za vlastní vystavení objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> pro uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions.StateDataFormat">
+      <summary>Získá nebo nastaví typ sloužící k zabezpečení dat zpracovávaných middlewarem.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider">
+      <summary>Výchozí implementace třídy <see cref="T:Microsoft.Owin.Security.Google.IGoogleOAuth2AuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider.#ctor">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Google.GoogleOAuth2ApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Google OAuth 2.0.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider.Authenticated(Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext)">
+      <summary>Vyvolá se pokaždé, když služba Google úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider.OnApplyRedirect">
+      <summary>Získá nebo nastaví delegáta, který se volá při volání metody ApplyRedirect.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider.OnAuthenticated">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda Authenticated.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider.OnReturnEndpoint">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda ReturnEndpoint.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Google.GoogleOAuth2ReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o kontextu a lístek ověřování návratového koncového bodu.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleOAuth2ReturnEndpointContext">
+      <summary>Poskytuje kontextové informace pro poskytovatele middlewaru.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleOAuth2ReturnEndpointContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.AuthenticationTicket)">
+      <summary>Inicializuje položku <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2ReturnEndpointContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="ticket">Lístek ověřování</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.GoogleReturnEndpointContext">
+      <summary>Poskytuje kontextové informace pro poskytovatele middlewaru.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.GoogleReturnEndpointContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.AuthenticationTicket)">
+      <param name="context">Prostředí OWIN</param>
+      <param name="ticket">Lístek ověřování</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.IGoogleAuthenticationProvider">
+      <summary>Určuje metody zpětného volání, které <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticationMiddleware" /> vyvolá, aby mohli vývojáři řídit proces ověřování./&amp;amp;gt;</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.IGoogleAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Google.GoogleApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Google OpenID.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.IGoogleAuthenticationProvider.Authenticated(Microsoft.Owin.Security.Google.GoogleAuthenticatedContext)">
+      <summary>Vyvolá se pokaždé, když služba Google úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.IGoogleAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Google.GoogleReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Google.IGoogleOAuth2AuthenticationProvider">
+      <summary>Určuje metody zpětného volání, které <see cref="T:Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationMiddleware" /> vyvolá, aby mohli vývojáři řídit proces ověřování./&amp;amp;gt;</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.IGoogleOAuth2AuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Google.GoogleOAuth2ApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Google OAuth 2.0.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.IGoogleOAuth2AuthenticationProvider.Authenticated(Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticatedContext)">
+      <summary>Vyvolá se pokaždé, když služba Google úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Google.IGoogleOAuth2AuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Google.GoogleOAuth2ReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o kontextu a lístek ověřování návratového koncového bodu.</param>
+    </member>
+    <member name="T:Owin.GoogleAuthenticationExtensions">
+      <summary>Rozšiřující metody pro používání třídy <see cref="T:Microsoft.Owin.Security.Google.GoogleAuthenticationMiddleware" /></summary>
+    </member>
+    <member name="M:Owin.GoogleAuthenticationExtensions.UseGoogleAuthentication(Owin.IAppBuilder)">
+      <summary>Ověří uživatele pomocí služby Google OpenId.</summary>
+      <returns>Aktualizovaný objekt <see cref="T:Owin.IAppBuilder" /></returns>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+    </member>
+    <member name="M:Owin.GoogleAuthenticationExtensions.UseGoogleAuthentication(Owin.IAppBuilder,Microsoft.Owin.Security.Google.GoogleAuthenticationOptions)">
+      <summary>Ověří uživatele pomocí služby Google OpenId.</summary>
+      <returns>Aktualizovaný objekt <see cref="T:Owin.IAppBuilder" /></returns>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+      <param name="options">Možnosti konfigurace middlewaru</param>
+    </member>
+    <member name="M:Owin.GoogleAuthenticationExtensions.UseGoogleAuthentication(Owin.IAppBuilder,Microsoft.Owin.Security.Google.GoogleOAuth2AuthenticationOptions)">
+      <summary>Ověří uživatele pomocí služby Google OAuth 2.0.</summary>
+      <returns>Aktualizovaný objekt <see cref="T:Owin.IAppBuilder" /></returns>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+      <param name="options">Možnosti konfigurace middlewaru</param>
+    </member>
+    <member name="M:Owin.GoogleAuthenticationExtensions.UseGoogleAuthentication(Owin.IAppBuilder,System.String,System.String)">
+      <summary>Ověří uživatele pomocí služby Google OAuth 2.0.</summary>
+      <returns>Aktualizovaný objekt <see cref="T:Owin.IAppBuilder" /></returns>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+      <param name="clientId">ID klienta přidělené službou Google</param>
+      <param name="clientSecret">Tajný klíč klienta přidělený službou Google</param>
+    </member>
+  </members>
+</doc>

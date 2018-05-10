@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Owin.Security.MicrosoftAccount</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Owin.Security.MicrosoftAccount.IMicrosoftAccountAuthenticationProvider">
+      <summary>Určuje metody zpětného volání, které <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationMiddleware" /> vyvolá, aby mohli vývojáři řídit proces ověřování./&amp;amp;gt;</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.IMicrosoftAccountAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Microsoft.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.IMicrosoftAccountAuthenticationProvider.Authenticated(Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext)">
+      <summary>Vyvolá se pokaždé, když společnost Microsoft úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.IMicrosoftAccountAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountApplyRedirectContext">
+      <summary>Kontext, který se předá, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru účtu Microsoft.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountApplyRedirectContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions,Microsoft.Owin.Security.AuthenticationProperties,System.String)">
+      <summary>Vytvoří nový objekt kontextu.</summary>
+      <param name="context">Kontext požadavku OWIN</param>
+      <param name="options">Možnosti middlewaru účtu Microsoft</param>
+      <param name="properties">Vlastnosti ověřování výzvy</param>
+      <param name="redirectUri">Počáteční identifikátor URI pro přesměrování</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountApplyRedirectContext.Properties">
+      <summary>Získá vlastnosti ověřování výzvy.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountApplyRedirectContext.RedirectUri">
+      <summary>Získá identifikátor URI, který se používá pro operaci přesměrování.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext">
+      <summary>Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.#ctor(Microsoft.Owin.IOwinContext,Newtonsoft.Json.Linq.JObject,System.String,System.String,System.String)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="user">Uživatel se serializací JSON</param>
+      <param name="accessToken">Přístupový token poskytovaný službou ověřování společnosti Microsoft</param>
+      <param name="refreshToken">Token obnovení poskytovaný službou ověřování společnosti Microsoft</param>
+      <param name="expires">Počet sekund do vypršení platnosti</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.AccessToken">
+      <summary>Získá přístupový token poskytovaný službou ověřování společnosti Microsoft.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.Email">
+      <summary>Získá e-mailovou adresu uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.ExpiresIn">
+      <summary>Získá dobu vypršení platnosti přístupového tokenu společnosti Microsoft.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.FirstName">
+      <summary>Získá jméno uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.Id">
+      <summary>Získá ID uživatele účtu Microsoft.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.Identity">
+      <summary>Získá hodnotu <see cref="T:System.Security.Claims.ClaimsIdentity" /> představující uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.LastName">
+      <summary>Získá příjmení uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.Name">
+      <summary>Získá uživatelské jméno uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.Properties">
+      <summary>Získá nebo nastaví kontejner objektů a dat pro běžné vlastnosti ověřování.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.RefreshToken">
+      <summary>Získá token obnovení poskytovaný službou ověřování společnosti Microsoft.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext.User">
+      <summary>Získá uživatele se serializací JSON.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationMiddleware">
+      <summary>Middleware OWIN pro ověřování uživatelů pomocí služby Účet Microsoft</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,Owin.IAppBuilder,Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationMiddleware" />.</summary>
+      <param name="next">Další middleware v kanálu OWIN, který má být vyvolán</param>
+      <param name="app">Aplikace OWIN</param>
+      <param name="options">Možnosti konfigurace pro middleware</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationMiddleware.CreateHandler">
+      <summary>Poskytuje objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> pro zpracování žádostí souvisejících s ověřováním.</summary>
+      <returns>Objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> nakonfigurovaný s objektem <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions" /> zadaným pro konstruktor</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions">
+      <summary>Možnosti konfigurace pro objekt <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationMiddleware" /></summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.#ctor">
+      <summary>Inicializuje nový objekt <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions" />.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.BackchannelCertificateValidator">
+      <summary>Získá nebo nastaví validátor definovaného certifikátu, který se má použít k ověření koncových bodů použitých při komunikaci Back Channel, které patří k účtu Microsoft.</summary>
+      <returns>Validátor definovaného certifikátu</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.BackchannelHttpHandler">
+      <summary>Objekt HttpMessageHandler používaný ke komunikaci se společností Microsoft.Lze používat současně s BackchannelCertificateValidator, pokud lze hodnotu přetypovat dolů na WebRequestHandler.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.BackchannelTimeout">
+      <summary>Získá nebo nastaví hodnotu časového limitu v milisekundách pro komunikace se společností Microsoft používající Back Channel.</summary>
+      <returns>Časový limit pro Back Channel</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.CallbackPath">
+      <summary>Cesta žádosti v rámci základní cesty aplikace, kam bude vrácen uživatelský agent.Middleware tuto žádost zpracuje, jakmile bude přijata.Výchozí hodnota je /signin-microsoft.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.Caption">
+      <summary>Získá nebo nastaví text, který může uživatel zobrazit v přihlašovacím uživatelském rozhraní.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.ClientId">
+      <summary>ID klienta aplikace přidělené ověřovací službou společnosti Microsoft.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.ClientSecret">
+      <summary>Tajný klíč klienta aplikace přidělený ověřovací službou společnosti Microsoft</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.Provider">
+      <summary>Získá nebo nastaví třídu <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.IMicrosoftAccountAuthenticationProvider" />, která slouží ke zpracování událostí ověření.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.Scope">
+      <summary>Seznam oprávnění k žádosti</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.SignInAsAuthenticationType">
+      <summary>Získá nebo nastaví název jiného ověřovacího middlewaru, který bude odpovědný za vlastní vystavení objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> pro uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions.StateDataFormat">
+      <summary>Získá nebo nastaví typ sloužící k zabezpečení dat zpracovávaných middlewarem.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider">
+      <summary>Výchozí implementace třídy <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.IMicrosoftAccountAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider.#ctor">
+      <summary>Inicializuje nový objekt <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru účtu Microsoft.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider.Authenticated(Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticatedContext)">
+      <summary>Vyvolá se pokaždé, když společnost Microsoft úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider.OnApplyRedirect">
+      <summary>Získá nebo nastaví delegáta, který se volá při volání metody ApplyRedirect.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider.OnAuthenticated">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda Authenticated.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider.OnReturnEndpoint">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda ReturnEndpoint.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountReturnEndpointContext">
+      <summary>Poskytuje kontextové informace pro poskytovatele middlewaru.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountReturnEndpointContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.AuthenticationTicket)">
+      <summary>Inicializuje nový objekt <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountReturnEndpointContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="ticket">Lístek ověřování</param>
+    </member>
+    <member name="T:Owin.MicrosoftAccountAuthenticationExtensions">
+      <summary>Rozšiřující metody pro používání třídy <see cref="T:Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationMiddleware" /></summary>
+    </member>
+    <member name="M:Owin.MicrosoftAccountAuthenticationExtensions.UseMicrosoftAccountAuthentication(Owin.IAppBuilder,Microsoft.Owin.Security.MicrosoftAccount.MicrosoftAccountAuthenticationOptions)">
+      <summary>Ověření uživatelů pomocí účtu Microsoft</summary>
+      <returns>Aktualizovaný objekt <see cref="T:Owin.IAppBuilder" /></returns>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+      <param name="options">Možnosti konfigurace middlewaru</param>
+    </member>
+    <member name="M:Owin.MicrosoftAccountAuthenticationExtensions.UseMicrosoftAccountAuthentication(Owin.IAppBuilder,System.String,System.String)">
+      <summary>Ověření uživatelů pomocí účtu Microsoft</summary>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+      <param name="clientId">ID klienta aplikace přidělené ověřovací službou společnosti Microsoft</param>
+      <param name="clientSecret">Tajný klíč klienta aplikace přidělený ověřovací službou společnosti Microsoft</param>
+    </member>
+  </members>
+</doc>

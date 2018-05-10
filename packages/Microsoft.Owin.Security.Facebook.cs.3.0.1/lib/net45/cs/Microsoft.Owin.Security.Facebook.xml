@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Owin.Security.Facebook</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Owin.Security.Facebook.FacebookApplyRedirectContext">
+      <summary>Kontext, který se předá, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Facebook.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookApplyRedirectContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions,Microsoft.Owin.Security.AuthenticationProperties,System.String)">
+      <summary>Vytvoří nový objekt kontextu.</summary>
+      <param name="context">Kontext požadavku OWIN</param>
+      <param name="options">Možnosti middlewaru Facebook</param>
+      <param name="properties">Vlastnosti ověřování výzvy</param>
+      <param name="redirectUri">Počáteční identifikátor URI pro přesměrování</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookApplyRedirectContext.Properties">
+      <summary>Získá vlastnosti ověřování výzvy.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookApplyRedirectContext.RedirectUri">
+      <summary>Získá identifikátor URI, který se používá pro operaci přesměrování.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext">
+      <summary>Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.#ctor(Microsoft.Owin.IOwinContext,Newtonsoft.Json.Linq.JObject,System.String,System.String)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="user">Uživatel se serializací JSON</param>
+      <param name="accessToken">Přístupový token služby Facebook</param>
+      <param name="expires">Počet sekund do vypršení platnosti</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.AccessToken">
+      <summary>Získá přístupový token služby Facebook.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.Email">
+      <summary>Získá e-mail služby Facebook.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.ExpiresIn">
+      <summary>Získá dobu vypršení platnosti přístupového tokenu služby Facebook</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.Id">
+      <summary>Získá ID uživatele služby Facebook.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.Identity">
+      <summary>Získá hodnotu <see cref="T:System.Security.Claims.ClaimsIdentity" /> představující uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.Link">
+      <summary>Získá nebo odkaz na objekt <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext" />.</summary>
+      <returns>Odkaz na objekt <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext" /></returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.Name">
+      <summary>Získá jméno uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.Properties">
+      <summary>Získá nebo nastaví kontejner objektů a dat pro běžné vlastnosti ověřování.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.User">
+      <summary>Získá uživatele se serializací JSON.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext.UserName">
+      <summary>Získá uživatelské jméno ve službě Facebook.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationMiddleware">
+      <summary>Middleware OWIN pro ověřování uživatelů pomocí služby Facebook</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticationMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,Owin.IAppBuilder,Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationMiddleware" />.</summary>
+      <param name="next">Další middleware v kanálu OWIN, který má být vyvolán</param>
+      <param name="app">Aplikace OWIN</param>
+      <param name="options">Možnosti konfigurace pro middleware</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticationMiddleware.CreateHandler">
+      <summary>Poskytuje objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> pro zpracování žádostí souvisejících s ověřováním.</summary>
+      <returns>Objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> nakonfigurovaný s objektem <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions" /> zadaným pro konstruktor</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions">
+      <summary>Možnosti konfigurace pro objekt <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationMiddleware" /></summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.#ctor">
+      <summary>Inicializuje nový objekt <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions" />.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.AppId">
+      <summary>Získá nebo nastaví položku appId přiřazenou službou Facebook.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.AppSecret">
+      <summary>Získá nebo nastaví tajný klíč aplikace přiřazený službou Facebook.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.BackchannelCertificateValidator">
+      <summary>Získá nebo nastaví validátor definovaného certifikátu (Certificate Pinning), který má být použit k ověření koncových bodů použitých při komunikaci používající Back Channel, které patří službě Facebook.</summary>
+      <returns>Validátor definovaného certifikátu</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.BackchannelHttpHandler">
+      <summary>Objekt HttpMessageHandler používaný ke komunikaci se službou Facebook.Lze používat současně s BackchannelCertificateValidator, pokud lze hodnotu přetypovat dolů na WebRequestHandler.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.BackchannelTimeout">
+      <summary>Získá nebo nastaví hodnotu časového limitu v milisekundách pro komunikaci se službou Facebook používající Back Channel.</summary>
+      <returns>Časový limit pro Back Channel v milisekundách.</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.CallbackPath">
+      <summary>Cesta žádosti v rámci základní cesty aplikace, kam bude vrácen uživatelský agent.Middleware tuto žádost zpracuje, jakmile bude přijata.Výchozí hodnota je /signin-facebook.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.Caption">
+      <summary>Získá nebo nastaví text, který může uživatel zobrazit v přihlašovacím uživatelském rozhraní.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.Provider">
+      <summary>Získá nebo nastaví třídu <see cref="T:Microsoft.Owin.Security.Facebook.IFacebookAuthenticationProvider" />, která slouží ke zpracování událostí ověření.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.Scope">
+      <summary>Seznam oprávnění k žádosti</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.SendAppSecretProof">
+      <summary>Získá nebo nastaví, jestli se má vygenerovat položka appsecret_proof a odeslat s voláními rozhraní API služby Facebook.Ve výchozím nastavení je tahle možnost povolená.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.SignInAsAuthenticationType">
+      <summary>Získá nebo nastaví název jiného ověřovacího middlewaru, který bude odpovědný za vlastní vystavení objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> pro uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions.StateDataFormat">
+      <summary>Získá nebo nastaví typ sloužící k zabezpečení dat zpracovávaných middlewarem.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider">
+      <summary>Výchozí implementace třídy <see cref="T:Microsoft.Owin.Security.Facebook.IFacebookAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider.#ctor">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Facebook.FacebookApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Facebook.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider.Authenticated(Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext)">
+      <summary>Vyvolá se vždy, když služba Facebook úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider.OnApplyRedirect">
+      <summary>Získá nebo nastaví delegáta, který se volá při volání metody ApplyRedirect.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider.OnAuthenticated">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda Authenticated.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider.OnReturnEndpoint">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda ReturnEndpoint.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Facebook.FacebookReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Facebook.FacebookReturnEndpointContext">
+      <summary>Poskytuje kontextové informace pro poskytovatele middlewaru.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.FacebookReturnEndpointContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.AuthenticationTicket)">
+      <param name="context">Prostředí OWIN</param>
+      <param name="ticket">Lístek ověřování</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Facebook.IFacebookAuthenticationProvider">
+      <summary>Určuje metody zpětného volání, které <see cref="T:Microsoft.Owin.Security.Facebook.FacebookAuthenticationMiddleware" /> vyvolá, aby mohli vývojáři řídit proces ověřování./&amp;amp;gt;</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.IFacebookAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Facebook.FacebookApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Facebook.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.IFacebookAuthenticationProvider.Authenticated(Microsoft.Owin.Security.Facebook.FacebookAuthenticatedContext)">
+      <summary>Vyvolá se vždy, když služba Facebook úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Facebook.IFacebookAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Facebook.FacebookReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+    </member>
+    <member name="T:Owin.FacebookAuthenticationExtensions">
+      <summary>Poskytuje rozšiřující metody pro ověřování Facebook.</summary>
+    </member>
+    <member name="M:Owin.FacebookAuthenticationExtensions.UseFacebookAuthentication(Owin.IAppBuilder,Microsoft.Owin.Security.Facebook.FacebookAuthenticationOptions)">
+      <summary>Vygeneruje ověřování Facebook pro aplikaci OWIN.</summary>
+      <returns>Objekt, <see cref="T:Owin.IAppBuilder" />, který generuje ověřování</returns>
+      <param name="app">Tvůrce aplikací.</param>
+      <param name="options">Možnosti ověřování Facebook</param>
+    </member>
+    <member name="M:Owin.FacebookAuthenticationExtensions.UseFacebookAuthentication(Owin.IAppBuilder,System.String,System.String)">
+      <summary>Vygeneruje ověřování Facebook pro aplikaci OWIN.</summary>
+      <returns>Objekt, <see cref="T:Owin.IAppBuilder" />, který generuje ověřování</returns>
+      <param name="app">Tvůrce aplikací.</param>
+      <param name="appId">ID aplikace.</param>
+      <param name="appSecret">Tajný klíč aplikace.</param>
+    </member>
+  </members>
+</doc>

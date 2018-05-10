@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Owin.Security</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Owin.Security.AppBuilderSecurityExtensions">
+      <summary>Poskytuje metody rozšíření pro hodnoty app.Property, které jsou vyžadovány pouze implementacemi middlewaru ověřování.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.AppBuilderSecurityExtensions.GetDefaultSignInAsAuthenticationType(Owin.IAppBuilder)">
+      <summary>Vrátí dříve nastavený typ ověřování, který by middleware externího přihlašování měl použít, pokud prohlížeč přejde zpět na návratovou adresu URL.</summary>
+      <param name="app">Tvůrce aplikací předaný spouštěcímu kódu aplikace.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.AppBuilderSecurityExtensions.SetDefaultSignInAsAuthenticationType(Owin.IAppBuilder,System.String)">
+      <summary>Voláno middlewarem ke změně názvu typu ověřování, který by externí middleware měl použít, pokud prohlížeč přejde zpět na návratovou adresu URL.</summary>
+      <param name="app">Tvůrce aplikací předaný spouštěcímu kódu aplikace.</param>
+      <param name="authenticationType">Typ ověřování, jako který by se měl přihlásit externí middleware.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.AuthenticationMode">
+      <summary>Řídí chování middlewaru pro ověřování.</summary>
+    </member>
+    <member name="F:Microsoft.Owin.Security.AuthenticationMode.Active">
+      <summary>V aktivním režimu middleware ověřování při přijetí žádosti změní identitu uživatele a při odesílání odpovědi změní také standardní chybovou zprávu 401.</summary>
+    </member>
+    <member name="F:Microsoft.Owin.Security.AuthenticationMode.Passive">
+      <summary>V pasivním režimu middleware ověřování poskytne identitu uživatele pouze na dotaz a odpovědi 401 bude měnit pouze v případě, že je v doplňujících datech výzvy ověřování uveden typ ověřování.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.AuthenticationOptions">
+      <summary>Základní možnosti pro veškerý ověřovací middleware</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.AuthenticationOptions.#ctor(System.String)">
+      <summary>Inicializace vlastností základní třídy AuthenticationOptions</summary>
+      <param name="authenticationType">Přiřazuje se k vlastnosti AuthenticationType.</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.AuthenticationOptions.AuthenticationMode">
+      <summary>V případě hodnoty Active (Aktivní) middleware ověřování změní uživatele příchozí žádosti a také odchozí odpovědi 401 Neoprávněný přístup.V případě hodnoty Passive (Pasivní) middleware ověřování poskytne identitu a změní odpovědi pouze v případě, že to explicitně vyžaduje nastavení AuthenticationType.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.AuthenticationOptions.AuthenticationType">
+      <summary>AuthenticationType v možnostech odpovídá vlastnosti IIdentity AuthenticationType.Je možné přiřadit jinou hodnotu za účelem využití stejného typu ověřovacího middlewaru v rámci kanálu více než jednou.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.AuthenticationOptions.Description">
+      <summary>Další informace o typu ověřování, který je pro aplikaci zpřístupněn.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.AuthenticationTicket">
+      <summary>Obsahuje informace o identitě uživatele a také další stav ověření.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.AuthenticationTicket.#ctor(System.Security.Claims.ClaimsIdentity,Microsoft.Owin.Security.AuthenticationProperties)">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.AuthenticationTicket" /></summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.AuthenticationTicket.Identity">
+      <summary>Získá ověřenou identitu uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.AuthenticationTicket.Properties">
+      <summary>Další hodnoty stavu pro relaci ověřování.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.CertificateSubjectKeyIdentifierValidator">
+      <summary>Poskytuje ověření připnutého certifikátu na základě identifikátoru klíče subjektu daného certifikátu.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.CertificateSubjectKeyIdentifierValidator.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.CertificateSubjectKeyIdentifierValidator" />.</summary>
+      <param name="validSubjectKeyIdentifiers">Sada identifikátorů klíče subjektu, které jsou platné pro požadavek HTTPS.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.CertificateSubjectKeyIdentifierValidator.Validate(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+      <summary>Ověří vzdálený certifikát SSL (Secure Sockets Layer) používaný k ověření.</summary>
+      <returns>Logická hodnota, která určuje, jestli se zadaný certifikát přijímá k ověření.</returns>
+      <param name="sender">Objekt, který obsahuje informace o stavu pro tohle ověření.</param>
+      <param name="certificate">Certifikát používaný k ověření vzdálené strany.</param>
+      <param name="chain">Řetěz certifikačních autorit, které jsou spojené se vzdáleným certifikátem.</param>
+      <param name="sslPolicyErrors">Jedna nebo víc chyb spojených se vzdáleným certifikátem.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.CertificateSubjectPublicKeyInfoValidator">
+      <summary>Implementuje validátor definovaných certifikátů předaných na adresu http://datatracker.ietf.org/doc/draft-ietf-websec-key-pinning/?include_text=1</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.CertificateSubjectPublicKeyInfoValidator.#ctor(System.Collections.Generic.IEnumerable{System.String},Microsoft.Owin.Security.SubjectPublicKeyInfoAlgorithm)">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.CertificateSubjectPublicKeyInfoValidator" />.</summary>
+      <param name="validBase64EncodedSubjectPublicKeyInfoHashes">Kolekce kódů hash objektu blob informací veřejného klíče certifikátu zakódovaných pomocí technologie base64.</param>
+      <param name="algorithm">Algoritmus používaný ke generování kódů hash.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.CertificateSubjectPublicKeyInfoValidator.Validate(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+      <summary>Ověří, jestli je aspoň jedna hodnota hash SPKI známá.</summary>
+      <returns>Logická hodnota, která určuje, jestli se zadaný certifikát přijímá k ověření.</returns>
+      <param name="sender">Objekt, který obsahuje informace o stavu pro tohle ověření.</param>
+      <param name="certificate">Certifikát používaný k ověření vzdálené strany.</param>
+      <param name="chain">Řetěz certifikačních autorit, které jsou spojené se vzdáleným certifikátem.</param>
+      <param name="sslPolicyErrors">Jedna nebo víc chyb spojených se vzdáleným certifikátem.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.CertificateThumbprintValidator">
+      <summary>Poskytuje ověření definovaného certifikátu na základě kryptografického otisku certifikátu.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.CertificateThumbprintValidator.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.CertificateThumbprintValidator" />.</summary>
+      <param name="validThumbprints">Sada kryptografických otisků, které jsou platné pro určitý požadavek HTTPS.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.CertificateThumbprintValidator.Validate(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+      <summary>Ověří, jestli kryptografické otisky certifikátu v řetězu podpisových certifikátů odpovídají aspoň jednomu povolenému kryptografickému otisku.</summary>
+      <returns>Logická hodnota, která určuje, jestli se zadaný certifikát přijímá k ověření.</returns>
+      <param name="sender">Objekt, který obsahuje informace o stavu pro tohle ověření.</param>
+      <param name="certificate">Certifikát používaný k ověření vzdálené strany.</param>
+      <param name="chain">Řetěz certifikačních autorit, které jsou spojené se vzdáleným certifikátem.</param>
+      <param name="sslPolicyErrors">Jedna nebo víc chyb spojených se vzdáleným certifikátem.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.ICertificateValidator">
+      <summary>Rozhraní pro poskytování ověření pomocí definovaného certifikátu, při kterém se pro komunikaci HTTPS kontroluje seznam se známými a bezpečnými certifikáty, aby se zajistila odpovídající ochrana proti bezpečnostním rizikům, nebo seznam certifikačních autorit neautorizovaných serverů, které vystavují pro hostitele bez informací o vlastníkovi hostitele.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.ICertificateValidator.Validate(System.Object,System.Security.Cryptography.X509Certificates.X509Certificate,System.Security.Cryptography.X509Certificates.X509Chain,System.Net.Security.SslPolicyErrors)">
+      <summary>Ověří vzdálený certifikát SSL (Secure Sockets Layer) používaný k ověření.</summary>
+      <returns>Logická hodnota, která určuje, jestli se zadaný certifikát přijímá k ověření.</returns>
+      <param name="sender">Objekt, který obsahuje informace o stavu pro tohle ověření.</param>
+      <param name="certificate">Certifikát používaný k ověření vzdálené strany.</param>
+      <param name="chain">Řetěz certifikačních autorit, které jsou spojené se vzdáleným certifikátem.</param>
+      <param name="sslPolicyErrors">Jedna nebo víc chyb spojených se vzdáleným certifikátem.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.ISecureDataFormat`1">
+      <summary>Reprezentuje data k zabezpečení.</summary>
+      <typeparam name="TData">Obecný typ dat.</typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.ISecureDataFormat`1.Protect(`0)">
+      <summary>Chrání data, aby nemohla být formátována.</summary>
+      <returns>Data určená k ochraně.</returns>
+      <param name="data">Data</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.ISecureDataFormat`1.Unprotect(System.String)">
+      <summary>Dešifruje data v zadaném textu.</summary>
+      <returns>Data, která mají být dešifrována.</returns>
+      <param name="protectedText">Chráněný text.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.SubjectPublicKeyInfoAlgorithm">
+      <summary>Algoritmus používaný k vytvoření kódů hash objektů blob informací veřejného klíče certifikátu.</summary>
+    </member>
+    <member name="F:Microsoft.Owin.Security.SubjectPublicKeyInfoAlgorithm.Sha1">
+      <summary />
+    </member>
+    <member name="F:Microsoft.Owin.Security.SubjectPublicKeyInfoAlgorithm.Sha256">
+      <summary />
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.PropertiesDataFormat"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.PropertiesDataFormat.#ctor(Microsoft.Owin.Security.DataProtection.IDataProtector)"></member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.SecureDataFormat`1">
+      <typeparam name="TData"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.SecureDataFormat`1.#ctor(Microsoft.Owin.Security.DataHandler.Serializer.IDataSerializer{`0},Microsoft.Owin.Security.DataProtection.IDataProtector,Microsoft.Owin.Security.DataHandler.Encoder.ITextEncoder)"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.SecureDataFormat`1.Protect(`0)"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.SecureDataFormat`1.Unprotect(System.String)"></member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.TicketDataFormat"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.TicketDataFormat.#ctor(Microsoft.Owin.Security.DataProtection.IDataProtector)"></member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Encoder.Base64TextEncoder">
+      <summary>Představuje kodér formátu textu base64.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.Base64TextEncoder.#ctor">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.DataHandler.Encoder.Base64TextEncoder" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.Base64TextEncoder.Decode(System.String)">
+      <summary>Dekóduje zadaný text.</summary>
+      <returns>Objekt <see cref="T:System.Byte" /> představující dekódovaná data.</returns>
+      <param name="text">Text, který má být dekódován.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.Base64TextEncoder.Encode(System.Byte[])">
+      <summary>Převede data na řetězec, který je ve formátu base64.</summary>
+      <returns>Řetězec dat převedených do formátu base64.</returns>
+      <param name="data">Data, která mají být převedena.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Encoder.Base64UrlTextEncoder">
+      <summary>Představuje kodér formátu textu Base64Url.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.Base64UrlTextEncoder.#ctor">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.DataHandler.Encoder.Base64UrlTextEncoder" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.Base64UrlTextEncoder.Decode(System.String)">
+      <summary>Dekóduje zadaný text.</summary>
+      <returns>Objekt <see cref="T:System.Byte" /> představující dekódovaná data.</returns>
+      <param name="text">Text, který má být dekódován.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.Base64UrlTextEncoder.Encode(System.Byte[])">
+      <summary>Převede data na řetězec, který je ve formátu Base64Url.</summary>
+      <returns>Řetězec dat převedených do formátu Base64Url.</returns>
+      <param name="data">Data, která mají být převedena.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Encoder.ITextEncoder">
+      <summary>Představuje rozhraní pro kodér textu.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.ITextEncoder.Decode(System.String)">
+      <summary>Dekóduje zadaný text.</summary>
+      <returns>Objekt <see cref="T:System.Byte" /> představující dekódovaná data.</returns>
+      <param name="text">Text, který má být dekódován.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Encoder.ITextEncoder.Encode(System.Byte[])">
+      <summary>Převede data na řetězec.</summary>
+      <returns>Řetězec dat, který má být převeden.</returns>
+      <param name="data">Data, která mají být převedena.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Encoder.TextEncodings">
+      <summary>Představuje kódování textu.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.DataHandler.Encoder.TextEncodings.Base64">
+      <summary>Získá kodér textu ve formátu Base64.</summary>
+      <returns>Kodér textu Base64.</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.DataHandler.Encoder.TextEncodings.Base64Url">
+      <summary>Získá kodér textu Base64Url.</summary>
+      <returns>Kodér textu Base64Url.</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Serializer.DataSerializers">
+      <summary>Poskytuje serializátory dat.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.DataHandler.Serializer.DataSerializers.Properties"></member>
+    <member name="P:Microsoft.Owin.Security.DataHandler.Serializer.DataSerializers.Ticket">
+      <summary>Získá nebo nastaví serializátor dat lístků.</summary>
+      <returns>Serializátor dat lístků.</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Serializer.IDataSerializer`1">
+      <summary>Reprezentuje rozhraní pro serializátor dat.</summary>
+      <typeparam name="TModel">Typ modelu dat.</typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.IDataSerializer`1.Deserialize(System.Byte[])">
+      <summary>Deserializuje zadaná data.</summary>
+      <param name="data">Data, která mají být deserializována.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.IDataSerializer`1.Serialize(`0)">
+      <summary>Serializuje data s daným modelem.</summary>
+      <param name="model">Model dat.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Serializer.PropertiesSerializer"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.PropertiesSerializer.#ctor"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.PropertiesSerializer.Deserialize(System.Byte[])"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.PropertiesSerializer.Read(System.IO.BinaryReader)"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.PropertiesSerializer.Serialize(Microsoft.Owin.Security.AuthenticationProperties)"></member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.PropertiesSerializer.Write(System.IO.BinaryWriter,Microsoft.Owin.Security.AuthenticationProperties)"></member>
+    <member name="T:Microsoft.Owin.Security.DataHandler.Serializer.TicketSerializer">
+      <summary>Reprezentuje serializátor lístků.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.TicketSerializer.#ctor">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.DataHandler.Serializer.TicketSerializer" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.TicketSerializer.Deserialize(System.Byte[])">
+      <summary>Deserializuje data lístku.</summary>
+      <returns>Deserializovaná data.</returns>
+      <param name="data">Data, která mají být deserializována.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.TicketSerializer.Read(System.IO.BinaryReader)">
+      <summary>Přečte zadaná data ze čtečky.</summary>
+      <returns>Data, která jsou čtena.</returns>
+      <param name="reader">Čtečka, ze které mají být data čtena.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.TicketSerializer.Serialize(Microsoft.Owin.Security.AuthenticationTicket)">
+      <summary>Serializuje data s daným modelem.</summary>
+      <param name="model">Model dat.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataHandler.Serializer.TicketSerializer.Write(System.IO.BinaryWriter,Microsoft.Owin.Security.AuthenticationTicket)">
+      <summary>Zapíše data ze zadaného zapisovače.</summary>
+      <param name="writer">Zapisovač.</param>
+      <param name="model">Model dat.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataProtection.AppBuilderExtensions">
+      <summary>Rozšíření tvůrce aplikací</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.AppBuilderExtensions.CreateDataProtector(Owin.IAppBuilder,System.String[])">
+      <summary>Vytvoří ochranu dat.</summary>
+      <returns>Vytvořený objekt <see cref="T:Microsoft.Owin.Security.DataProtection.IDataProtector" />.</returns>
+      <param name="app">Tvůrce aplikací.</param>
+      <param name="purposes">Seznam účelů pro vytvoření ochrany dat.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.AppBuilderExtensions.GetDataProtectionProvider(Owin.IAppBuilder)">
+      <summary>Načte zprostředkovatele ochrany dat pro aplikaci.</summary>
+      <returns>Objekt <see cref="T:Microsoft.Owin.Security.DataProtection.IDataProtectionProvider" /> k získání</returns>
+      <param name="app">Tvůrce aplikací.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.AppBuilderExtensions.SetDataProtectionProvider(Owin.IAppBuilder,Microsoft.Owin.Security.DataProtection.IDataProtectionProvider)">
+      <summary>Nastaví zprostředkovatele ochrany dat.</summary>
+      <param name="app">Tvůrce aplikací.</param>
+      <param name="dataProtectionProvider">Zprostředkovatel ochrany dat k nastavení</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider">
+      <summary>Používá se k poskytování služeb na ochranu dat, které jsou odvozeny od rozhraní Data Protection API.Jedná se o nejlepší volbu ochrany údajů, pokud vaše aplikace není hostována v rámci ASP.NET a všechny běžící procesy mají stejnou identitu domény.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider.#ctor">
+      <summary>Inicializuje novou položku DpapiDataProtectionProvider s náhodným názvem aplikace.Tím se zajistí ochrana dat po dobu provádění stávající aplikace.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider.#ctor(System.String)">
+      <summary>Inicializuje novou položku DpapiDataProtectionProvider, která používá v ochranném algoritmu danou položku appName.</summary>
+      <param name="appName">K odezvě na zabezpečená data je potřeba hodnota zadaná uživatelem.Výchozí hodnota při vlastním hostování pochází z IAppBuilder.Properties["owin.AppName"].</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider.Create(System.String[])">
+      <summary>Vrátí novou instanci IDataProtection pro zprostředkovatele.</summary>
+      <returns>Instance služby ochrany dat</returns>
+      <param name="purposes">Další entropie umožňující zajistit, aby bylo možné zrušit ochranu chráněných dat pouze pro správné účely.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataProtection.IDataProtectionProvider">
+      <summary> Objekt pro vytváření používaný k vytváření instancí IDataProtection.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.IDataProtectionProvider.Create(System.String[])">
+      <summary> Vrátí novou instanci IDataProtection pro zprostředkovatele. </summary>
+      <returns>Instance služby ochrany dat.</returns>
+      <param name="purposes">Další entropie umožňující zajistit, aby bylo možné zrušit ochranu chráněných dat pouze pro správné účely.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.DataProtection.IDataProtector">
+      <summary> Služba používaná k ochraně a zrušení ochrany dat.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.IDataProtector.Protect(System.Byte[])">
+      <summary> Volá se pro ochranu dat uživatele.</summary>
+      <param name="userData">Původní data, která musí být chráněna.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.DataProtection.IDataProtector.Unprotect(System.Byte[])">
+      <summary> Volá se pro zrušení ochrany dat uživatele.</summary>
+      <param name="protectedData">Bajtové pole vrácené voláním metody Protect v rámci stejné služby IDataProtection.</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler">
+      <summary> Základní třída pro úlohy prováděné většinou middlewaru ověřování na základě jednotlivých žádostí. </summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.#ctor">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.ApplyResponseChallengeAsync">
+      <summary>Přepíše tuto metodu tak, aby zpracovávala výzvy 401, pokud příslušné schéma ověřování v rámci toku požadavků zpracovává interakci ověřování(například přidání hlavičky odpovědi nebo změna výsledku 401 na výsledek 302 na přihlašovací stránce nebo stránce pro externí přihlášení).</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.ApplyResponseCoreAsync">
+      <summary>Hlavní metoda, která může být přepsána obslužnou rutinouVýchozí chování je volat dvě společné aktivity odpovědí – jednu, která zpracovává problémy s přihlašováním a odhlašováním, a druhou, která zpracovává výzvy 401.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.ApplyResponseGrantAsync">
+      <summary>Přepíše tuto metodu tak, aby zpracovávala problémy s přihlašováním a odhlašováním, pokud příslušné schéma ověřování v rámci toku požadavků zpracovává udělování/odvolávání(například nastavení/odstranění souborů cookie).</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.AuthenticateAsync">
+      <summary>Způsobí alespoň jedno provedení loky ověřování v modulu AuthenticateCore pro aktuální požadavek a vrátí výsledky.Vícenásobné volání metody Authenticate vždy vrátí původní hodnotu.Doporučuje se vždy volat tuto metodu a nevolat operaci AuthenticateCore přímo.</summary>
+      <returns>Data lístku poskytnutá logikou ověřování.</returns>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.AuthenticateCoreAsync">
+      <summary>Hlavní logika ověřování, která musí být poskytnuta obslužnou rutinouBude volána alespoň jednou na každý požadavek.Nesmí se volat přímo – místo ní se doporučuje volat zabalenou metodu Authenticate.</summary>
+      <returns>Data lístku poskytnutá logikou ověřování.</returns>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.BaseInitializeAsync(Microsoft.Owin.Security.AuthenticationOptions,Microsoft.Owin.IOwinContext)"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.Context"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.GenerateCorrelationId(Microsoft.Owin.Security.AuthenticationProperties)"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.Helper"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.InitializeCoreAsync"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.InvokeAsync">
+      <summary>Volá se jednou prostřednictvím společného kódu po inicializaci.Pokud ověřovací middleware přímo odpoví na konkrétně známé cesty, musí přepsat tuto virtuální položku, porovnat cestu požadavku se známými cestami, poskytnout příslušné informace o odpovědi a nastavit hodnotu true, která zastaví další zpracování.</summary>
+      <returns>Vrácení hodnoty false způsobí, že bude společný kód volat další middleware v řadě.Vrácení hodnoty true způsobí, že společný kód zahájí asynchronní dokončování, aniž by došlo k volání zbytku middlewaru v řadě.</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.Request"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.RequestPathBase"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.Response"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.TeardownCoreAsync"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler.ValidateCorrelationId(Microsoft.Owin.Security.AuthenticationProperties,Microsoft.Owin.Logging.ILogger)"></member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler`1">
+      <summary>Základní třída pro úlohy prováděné většinou middlewaru ověřování na základě jednotlivých žádostí.</summary>
+      <typeparam name="TOptions">Určuje typ vlastnosti AuthenticationOptions.</typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler`1.#ctor">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler`1" />.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler`1.Options"></member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.AuthenticationMiddleware`1">
+      <summary>Představuje middleware pro ověření.</summary>
+      <typeparam name="TOptions">Typ možností ověřování</typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationMiddleware`1.#ctor(Microsoft.Owin.OwinMiddleware,`0)">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationMiddleware`1" />.</summary>
+      <param name="next">Další middleware OWIN</param>
+      <param name="options">Možnosti ověřování</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationMiddleware`1.CreateHandler">
+      <summary>Vytvoří obslužnou rutinu ověřování.</summary>
+      <returns>Vytvořený objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler`1" />.</returns>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationMiddleware`1.Invoke(Microsoft.Owin.IOwinContext)"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationMiddleware`1.Options">
+      <summary>Získá nebo nastaví možnosti ověřování.</summary>
+      <returns>Úloha, kterou je ověřování dokončeno</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.ISecureDataFormat{Microsoft.Owin.Security.AuthenticationTicket},Microsoft.Owin.Security.AuthenticationTicket)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext.SerializeTicket"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext.SetToken(System.String)"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext.Ticket"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext.Token"></member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.#ctor"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.Create(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.CreateAsync(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext)"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.OnCreate"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.OnCreateAsync"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.OnReceive"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.OnReceiveAsync"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.Receive(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenProvider.ReceiveAsync(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext)"></member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.ISecureDataFormat{Microsoft.Owin.Security.AuthenticationTicket},System.String)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext.DeserializeTicket(System.String)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext.SetTicket(Microsoft.Owin.Security.AuthenticationTicket)"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext.Ticket"></member>
+    <member name="P:Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext.Token"></member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.IAuthenticationTokenProvider"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.IAuthenticationTokenProvider.Create(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.IAuthenticationTokenProvider.CreateAsync(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenCreateContext)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.IAuthenticationTokenProvider.Receive(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.IAuthenticationTokenProvider.ReceiveAsync(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext)"></member>
+    <member name="T:Microsoft.Owin.Security.Infrastructure.SecurityHelper">
+      <summary>Kód pomocného objektu použitý při implementace middlewaru ověřování.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.#ctor(Microsoft.Owin.IOwinContext)">
+      <summary>Kód pomocného objektu použitý při implementace middlewaru ověřování.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.AddUserIdentity(System.Security.Principal.IIdentity)">
+      <summary>Přidá další objekt ClaimsIdentity k objektu ClaimsPrincipal v klíči prostředí server.User.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.Equals(Microsoft.Owin.Security.Infrastructure.SecurityHelper)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.Equals(System.Object)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.GetHashCode"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.LookupChallenge(System.String,Microsoft.Owin.Security.AuthenticationMode)">
+      <summary>Najde podrobnosti výzvy ověřování k odpovědi pro konkrétní middleware ověřování.</summary>
+      <returns>Informace, která dává middlewaru pokyn, jak by se měl chovat.</returns>
+      <param name="authenticationType">Hledaný typ ověřování.</param>
+      <param name="authenticationMode">Režim ověřování, v rámci kterého middleware běží.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.LookupSignIn(System.String)">
+      <summary>Najde podrobnosti o přihlašování k odpovědi pro konkrétní middleware ověřování.</summary>
+      <returns>Informace, která dává middlewaru pokyn, jak by se měl chovat.</returns>
+      <param name="authenticationType">Hledaný typ ověřování.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.LookupSignOut(System.String,Microsoft.Owin.Security.AuthenticationMode)">
+      <summary>Najde podrobnosti o odhlašování k odpovědi pro konkrétní middleware ověřování.</summary>
+      <returns>Informace, která dává middlewaru pokyn, jak by se měl chovat.</returns>
+      <param name="authenticationType">Hledaný typ ověřování.</param>
+      <param name="authenticationMode">Režim ověřování, v rámci kterého middleware běží.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.op_Equality(Microsoft.Owin.Security.Infrastructure.SecurityHelper,Microsoft.Owin.Security.Infrastructure.SecurityHelper)"></member>
+    <member name="M:Microsoft.Owin.Security.Infrastructure.SecurityHelper.op_Inequality(Microsoft.Owin.Security.Infrastructure.SecurityHelper,Microsoft.Owin.Security.Infrastructure.SecurityHelper)"></member>
+    <member name="T:Microsoft.Owin.Security.Notifications.AuthenticationFailedNotification`2">
+      <typeparam name="TMessage"></typeparam>
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Notifications.AuthenticationFailedNotification`2.#ctor(Microsoft.Owin.IOwinContext,`1)"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.AuthenticationFailedNotification`2.Exception"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.AuthenticationFailedNotification`2.ProtocolMessage"></member>
+    <member name="T:Microsoft.Owin.Security.Notifications.BaseNotification`1">
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Notifications.BaseNotification`1.#ctor(Microsoft.Owin.IOwinContext,`0)"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.BaseNotification`1.HandledResponse"></member>
+    <member name="M:Microsoft.Owin.Security.Notifications.BaseNotification`1.HandleResponse">
+      <summary>Ukončí veškeré zpracování tohoto požadavku a provede návrat do klienta.Za vygenerování úplné odpovědi zodpovídá volající.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Notifications.BaseNotification`1.Skipped"></member>
+    <member name="M:Microsoft.Owin.Security.Notifications.BaseNotification`1.SkipToNextMiddleware">
+      <summary>Ukončí zpracování požadavku ve stávajícím middlewaru a předá řízení dalšímu.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Notifications.BaseNotification`1.State"></member>
+    <member name="T:Microsoft.Owin.Security.Notifications.MessageReceivedNotification`2">
+      <typeparam name="TMessage"></typeparam>
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Notifications.MessageReceivedNotification`2.#ctor(Microsoft.Owin.IOwinContext,`1)"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.MessageReceivedNotification`2.ProtocolMessage"></member>
+    <member name="T:Microsoft.Owin.Security.Notifications.NotificationResultState"></member>
+    <member name="F:Microsoft.Owin.Security.Notifications.NotificationResultState.Continue">
+      <summary>Pokračuje v normálním zpracování.</summary>
+    </member>
+    <member name="F:Microsoft.Owin.Security.Notifications.NotificationResultState.HandledResponse">
+      <summary>Zruší veškeré zpracování tohoto požadavku.</summary>
+    </member>
+    <member name="F:Microsoft.Owin.Security.Notifications.NotificationResultState.Skipped">
+      <summary>Ukončí zpracování požadavku ve stávajícím middlewaru a předá řízení dalšímu.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Notifications.RedirectToIdentityProviderNotification`2">
+      <typeparam name="TMessage"></typeparam>
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Notifications.RedirectToIdentityProviderNotification`2.#ctor(Microsoft.Owin.IOwinContext,`1)"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.RedirectToIdentityProviderNotification`2.HandledResponse"></member>
+    <member name="M:Microsoft.Owin.Security.Notifications.RedirectToIdentityProviderNotification`2.HandleResponse">
+      <summary>Ukončí veškeré zpracování tohoto požadavku a provede návrat do klienta.Za vygenerování úplné odpovědi zodpovídá volající.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Notifications.RedirectToIdentityProviderNotification`2.ProtocolMessage"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.RedirectToIdentityProviderNotification`2.State"></member>
+    <member name="T:Microsoft.Owin.Security.Notifications.SecurityTokenReceivedNotification`2">
+      <typeparam name="TMessage"></typeparam>
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Notifications.SecurityTokenReceivedNotification`2.#ctor(Microsoft.Owin.IOwinContext,`1)"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.SecurityTokenReceivedNotification`2.ProtocolMessage"></member>
+    <member name="T:Microsoft.Owin.Security.Notifications.SecurityTokenValidatedNotification`2">
+      <typeparam name="TMessage"></typeparam>
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Notifications.SecurityTokenValidatedNotification`2.#ctor(Microsoft.Owin.IOwinContext,`1)"></member>
+    <member name="P:Microsoft.Owin.Security.Notifications.SecurityTokenValidatedNotification`2.AuthenticationTicket">
+      <summary>Získá nebo nastaví položku <see cref="P:Microsoft.Owin.Security.Notifications.SecurityTokenValidatedNotification`2.AuthenticationTicket" />.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Notifications.SecurityTokenValidatedNotification`2.ProtocolMessage">
+      <summary>Získá nebo nastaví zprávu protokolu.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Provider.BaseContext">
+      <summary>Představuje kontext základní třídy.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Provider.BaseContext.#ctor(Microsoft.Owin.IOwinContext)"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.BaseContext.OwinContext"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.BaseContext.Request"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.BaseContext.Response"></member>
+    <member name="T:Microsoft.Owin.Security.Provider.BaseContext`1">
+      <summary>Základní třída používaná pro konkrétní kontexty událostí</summary>
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Provider.BaseContext`1.#ctor(Microsoft.Owin.IOwinContext,`0)"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.BaseContext`1.Options"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.BaseContext`1.OwinContext"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.BaseContext`1.Request"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.BaseContext`1.Response"></member>
+    <member name="T:Microsoft.Owin.Security.Provider.EndpointContext">
+      <summary>Představuje kontext koncového bodu.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Provider.EndpointContext.#ctor(Microsoft.Owin.IOwinContext)"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.EndpointContext.IsRequestCompleted">
+      <summary>Získá nebo nastaví hodnotu, která označuje, zda je žádost pro tento kontext dokončena.</summary>
+      <returns>Hodnota true, pokud je žádost pro tento kontext dokončena, jinak hodnota false.</returns>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Provider.EndpointContext.RequestCompleted">
+      <summary>Označuje dokončenou žádost pro daný kontext.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Provider.EndpointContext`1">
+      <summary>Základní třída používaná pro konkrétní kontexty událostí</summary>
+      <typeparam name="TOptions"></typeparam>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Provider.EndpointContext`1.#ctor(Microsoft.Owin.IOwinContext,`0)">
+      <summary>Vytvoří instanci tohoto kontextu.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Provider.EndpointContext`1.IsRequestCompleted">
+      <summary>Hodnota true, pokud by požadavek neměl být dále zpracováván ostatními komponentami.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Provider.EndpointContext`1.RequestCompleted">
+      <summary>Zabrání v dalším zpracování požadavku ostatními komponentami.IsRequestCompleted má po volání hodnotu true.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Provider.ReturnEndpointContext">
+      <summary>Představuje kontext vrácení koncového bodu.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Provider.ReturnEndpointContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.AuthenticationTicket)"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.ReturnEndpointContext.Identity">
+      <summary>Získá nebo nastaví identitu tohoto kontextu.</summary>
+      <returns>Identita tohoto kontextu</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Provider.ReturnEndpointContext.Properties"></member>
+    <member name="P:Microsoft.Owin.Security.Provider.ReturnEndpointContext.RedirectUri">
+      <summary>Získá nebo nastaví identifikátor URI, který by měl být použit při vrácení tohoto kontextu.</summary>
+      <returns>Identifikátor URI, který by měl být použit při vrácení tohoto kontextu</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Provider.ReturnEndpointContext.SignInAsAuthenticationType">
+      <summary>Získá nebo nastaví kontext, který se přihlásí jako typ ověřování.</summary>
+      <returns>Kontext, který se přihlásí jako typ ověřování</returns>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>Microsoft.Owin.Security.Twitter</name>
+  </assembly>
+  <members>
+    <member name="T:Microsoft.Owin.Security.Twitter.ITwitterAuthenticationProvider">
+      <summary>Určuje metody zpětného volání, které <see cref="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationMiddleware" /> vyvolá, aby mohli vývojáři řídit proces ověřování./&amp;amp;gt;</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.ITwitterAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Twitter.TwitterApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Twitter.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.ITwitterAuthenticationProvider.Authenticated(Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext)">
+      <summary>Vyvolá se vždy, když služba Twitter úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.ITwitterAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Twitter.TwitterReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.TwitterApplyRedirectContext">
+      <summary>Kontext, který se předá, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Twitter.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterApplyRedirectContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions,Microsoft.Owin.Security.AuthenticationProperties,System.String)">
+      <summary>Vytvoří nový objekt kontextu.</summary>
+      <param name="context">Kontext požadavku OWIN</param>
+      <param name="options">Možnosti middlewaru Facebook</param>
+      <param name="properties">Vlastnosti ověřování výzvy</param>
+      <param name="redirectUri">Počáteční identifikátor URI pro přesměrování</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterApplyRedirectContext.Properties">
+      <summary>Získá vlastnosti ověřování výzvy.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterApplyRedirectContext.RedirectUri">
+      <summary>Získá identifikátor URI, který se používá pro operaci přesměrování.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext">
+      <summary>Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext.#ctor(Microsoft.Owin.IOwinContext,System.String,System.String,System.String,System.String)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="userId">ID uživatele služby Twitter</param>
+      <param name="screenName">Název obrazovky služby Twitter</param>
+      <param name="accessToken">Přístupový token služby Twitter</param>
+      <param name="accessTokenSecret">Tajný klíč přístupového tokenu služby Twitter</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext.AccessToken">
+      <summary>Získá přístupový token služby Twitter.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext.AccessTokenSecret">
+      <summary>Získá tajný klíč přístupového tokenu služby Twitter.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext.Identity">
+      <summary>Získá hodnotu <see cref="T:System.Security.Claims.ClaimsIdentity" /> představující uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext.Properties">
+      <summary>Získá nebo nastaví kontejner objektů a dat pro běžné vlastnosti ověřování.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext.ScreenName">
+      <summary>Získá název obrazovky služby Twitter.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext.UserId">
+      <summary>Získá ID uživatele služby Twitter.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationMiddleware">
+      <summary>Middleware OWIN pro ověřování uživatelů pomocí služby Twitter</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticationMiddleware.#ctor(Microsoft.Owin.OwinMiddleware,Owin.IAppBuilder,Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions)">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationMiddleware" />.</summary>
+      <param name="next">Další middleware v kanálu OWIN, který má být vyvolán</param>
+      <param name="app">Aplikace OWIN</param>
+      <param name="options">Možnosti konfigurace pro middleware</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticationMiddleware.CreateHandler">
+      <summary>Poskytuje objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> pro zpracování žádostí souvisejících s ověřováním.</summary>
+      <returns>Objekt <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> nakonfigurovaný s objektem <see cref="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions" /> zadaným pro konstruktor</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions">
+      <summary>Možnosti pro middleware ověřování služby Twitter</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.#ctor">
+      <summary>Inicializuje novou instanci třídy <see cref="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions" />.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.BackchannelCertificateValidator">
+      <summary>Získá nebo nastaví validátor definovaného certifikátu (Certificate Pinning), který se má použít k ověření koncových bodů použitých při komunikaci používající Back Channel, které patří službě Twitter.</summary>
+      <returns>Validátor definovaného certifikátu</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.BackchannelHttpHandler">
+      <summary>Objekt HttpMessageHandler používaný ke komunikaci se službou TwitterLze používat současně s BackchannelCertificateValidator, pokud lze hodnotu přetypovat dolů na WebRequestHandler.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.BackchannelTimeout">
+      <summary>Získá nebo nastaví hodnotu časového limitu v milisekundách pro komunikaci se službou Twitter používající Back Channel.</summary>
+      <returns>Časový limit pro Back Channel</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.CallbackPath">
+      <summary>Cesta žádosti v rámci základní cesty aplikace, kam bude vrácen uživatelský agent.Middleware tuto žádost zpracuje, jakmile bude přijata.Výchozí hodnota je /signin-twitter.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.Caption">
+      <summary>Získá nebo nastaví text, který může uživatel zobrazit v přihlašovacím uživatelském rozhraní.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.ConsumerKey">
+      <summary>Získá nebo nastaví uživatelský klíč používaný ke komunikaci se službou Twitter.</summary>
+      <returns>Uživatelský klíč používaný ke komunikaci se službou Twitter</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.ConsumerSecret">
+      <summary>Získá nebo nastaví uživatelský tajný klíč používaný k podepisování žádostí pro službu Twitter.</summary>
+      <returns>Uživatelský tajný klíč používaný k podepisování žádostí pro službu Twitter</returns>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.Provider">
+      <summary>Získá nebo nastaví třídu <see cref="T:Microsoft.Owin.Security.Twitter.ITwitterAuthenticationProvider" />, která slouží ke zpracování událostí ověření.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.SignInAsAuthenticationType">
+      <summary>Získá nebo nastaví název jiného ověřovacího middlewaru, který bude odpovědný za vlastní vystavení objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> pro uživatele.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions.StateDataFormat">
+      <summary>Získá nebo nastaví typ sloužící k zabezpečení dat zpracovávaných middlewarem.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider">
+      <summary>Výchozí implementace třídy <see cref="T:Microsoft.Owin.Security.Twitter.ITwitterAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider.#ctor">
+      <summary>Inicializuje objekt <see cref="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider" />.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider.ApplyRedirect(Microsoft.Owin.Security.Twitter.TwitterApplyRedirectContext)">
+      <summary>Volá se, když některá výzva způsobí přesměrování, které zajistí autorizaci koncového bodu v middlewaru Twitter.</summary>
+      <param name="context">Obsahuje identifikátor URI pro přesměrování a položku <see cref="T:Microsoft.Owin.Security.AuthenticationProperties" /> výzvy.</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider.Authenticated(Microsoft.Owin.Security.Twitter.TwitterAuthenticatedContext)">
+      <summary>Vyvolá se vždy, když služba Twitter úspěšně ověří uživatele.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+      <param name="context">Obsahuje informace o relaci přihlášení a také o objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> uživatele.</param>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider.OnApplyRedirect">
+      <summary>Získá nebo nastaví delegáta, který se volá při volání metody ApplyRedirect.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider.OnAuthenticated">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda Authenticated.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider.OnReturnEndpoint">
+      <summary>Získá nebo nastaví funkci, která je volána, když je volána metoda ReturnEndpoint.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterAuthenticationProvider.ReturnEndpoint(Microsoft.Owin.Security.Twitter.TwitterReturnEndpointContext)">
+      <summary>Voláno před uložením objektu <see cref="T:System.Security.Claims.ClaimsIdentity" /> do místního souboru cookie a před přesměrováním prohlížeče do původně požadované adresy URL.</summary>
+      <returns>Objekt <see cref="T:System.Threading.Tasks.Task" />, který reprezentuje dokončenou operaci</returns>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.TwitterReturnEndpointContext">
+      <summary>Poskytuje kontextové informace pro poskytovatele middlewaru.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.TwitterReturnEndpointContext.#ctor(Microsoft.Owin.IOwinContext,Microsoft.Owin.Security.AuthenticationTicket)">
+      <summary>Inicializuje nový objekt <see cref="T:Microsoft.Owin.Security.Twitter.TwitterReturnEndpointContext" />.</summary>
+      <param name="context">Prostředí OWIN</param>
+      <param name="ticket">Lístek ověřování</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.Messages.AccessToken">
+      <summary>Přístupový token služby Twitter</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.Messages.AccessToken.#ctor"></member>
+    <member name="P:Microsoft.Owin.Security.Twitter.Messages.AccessToken.ScreenName">
+      <summary>Získá nebo nastaví název obrazovky služby Twitter.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.Messages.AccessToken.UserId">
+      <summary>Získá nebo nastaví ID uživatele služby Twitter.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.Messages.RequestToken">
+      <summary>Token požadavku služby Twitter</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.Messages.RequestToken.#ctor"></member>
+    <member name="P:Microsoft.Owin.Security.Twitter.Messages.RequestToken.CallbackConfirmed"></member>
+    <member name="P:Microsoft.Owin.Security.Twitter.Messages.RequestToken.Properties">
+      <summary>Získá nebo nastaví kontejner objektů a dat pro běžné vlastnosti ověřování.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.Messages.RequestToken.Token">
+      <summary>Získá nebo nastaví token služby Twitter.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.Messages.RequestToken.TokenSecret">
+      <summary>Získá nebo nastaví tajný klíč tokenu služby Twitter.</summary>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer">
+      <summary>Serializuje a deserializuje žádost služby Twitter a přístupové tokeny, aby je byo možné používat jinými součástmi aplikace.</summary>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer.#ctor"></member>
+    <member name="M:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer.Deserialize(System.Byte[])">
+      <summary>Deserializuje token požadavku.</summary>
+      <returns>Token požadavku služby Twitter</returns>
+      <param name="data">Bajtové pole obsahující serializovaný token</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer.Read(System.IO.BinaryReader)">
+      <summary>Čte tokeny požadavků služby Twitter z řady bajtů.Používá se metodou <see cref="M:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer.Deserialize(System.Byte[])" />.</summary>
+      <returns>Token</returns>
+      <param name="reader">Čtečka, která má být použita při čtení bajtů tokenu</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer.Serialize(Microsoft.Owin.Security.Twitter.Messages.RequestToken)">
+      <summary>Serializuje token požadavku.</summary>
+      <returns>Bajtové pole obsahující serializovaný token</returns>
+      <param name="model">Token, který má být serializován</param>
+    </member>
+    <member name="M:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer.Write(System.IO.BinaryWriter,Microsoft.Owin.Security.Twitter.Messages.RequestToken)">
+      <summary>Zapisuje tokeny požadavků služby Twitter jako řadu bajtů.Používá se metodou <see cref="M:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer.Serialize(Microsoft.Owin.Security.Twitter.Messages.RequestToken)" />.</summary>
+      <param name="writer">Zapisovač, který má být použit při zápisu tokenu</param>
+      <param name="token">Token, který má být zapsán</param>
+    </member>
+    <member name="T:Microsoft.Owin.Security.Twitter.Messages.Serializers">
+      <summary>Poskytuje přístup k serializátoru tokenů požadavku.</summary>
+    </member>
+    <member name="P:Microsoft.Owin.Security.Twitter.Messages.Serializers.RequestToken">
+      <summary>Získá nebo nastaví staticky dostupný objekt serializace.Tato vlastnost bude mít ve výchozím nastavení hodnotu <see cref="T:Microsoft.Owin.Security.Twitter.Messages.RequestTokenSerializer" />.</summary>
+    </member>
+    <member name="T:Owin.TwitterAuthenticationExtensions">
+      <summary>Rozšiřující metody pro používání třídy <see cref="T:Microsoft.Owin.Security.Twitter.TwitterAuthenticationMiddleware" /></summary>
+    </member>
+    <member name="M:Owin.TwitterAuthenticationExtensions.UseTwitterAuthentication(Owin.IAppBuilder,Microsoft.Owin.Security.Twitter.TwitterAuthenticationOptions)">
+      <summary>Ověření uživatelů pomocí služby Twitter</summary>
+      <returns>Aktualizovaný objekt <see cref="T:Owin.IAppBuilder" /></returns>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+      <param name="options">Možnosti konfigurace middlewaru</param>
+    </member>
+    <member name="M:Owin.TwitterAuthenticationExtensions.UseTwitterAuthentication(Owin.IAppBuilder,System.String,System.String)">
+      <summary>Ověření uživatelů pomocí služby Twitter</summary>
+      <returns>Aktualizovaný objekt <see cref="T:Owin.IAppBuilder" /></returns>
+      <param name="app">Objekt <see cref="T:Owin.IAppBuilder" /> předaný metodě konfigurace</param>
+      <param name="consumerKey">Uživatelský klíč vystavený službou Twitter</param>
+      <param name="consumerSecret">Uživatelský tajný klíč vystavený službou Twitter</param>
+    </member>
+  </members>
+</doc>
