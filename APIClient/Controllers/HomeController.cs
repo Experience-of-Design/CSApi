@@ -1,6 +1,7 @@
 ﻿using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth2;
 using RestSharp;
+using RestSharp.Authenticators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,42 +14,40 @@ namespace APIClient.Controllers
     {
         const string clientID = "sandboxClientId";
         const string clientSecret = "sandboxClientSecret";
-        const string redirectUri = "http://localhost:54320/home/oauth2callback";
+        //const string redirectUri = "http://localhost:54320/home/oauth2callback";
         AuthorizationServerDescription server = new AuthorizationServerDescription
         {
-            AuthorizationEndpoint = new Uri("https://webapi.ersteapihub.com/api/csas/sandbox/v1/sandbox-idp/auth"),
-            TokenEndpoint = new Uri("https://webapi.ersteapihub.com/api/csas/sandbox/v1/sandbox-idp/token"),
+            AuthorizationEndpoint = new Uri("https://webapi.developers.erstegroup.com/api/csas/sandbox/v1/sandbox-idp/authorize"),
+            TokenEndpoint = new Uri("https://webapi.developers.ersteapihub.com/api/csas/sandbox/v1/sandbox-idp/token"),
             ProtocolVersion = ProtocolVersion.V20,
         };
 
         public ActionResult Index()
         {
-            var client = new RestClient("https://webapi.ersteapihub.com/api/csas/sandbox/v1/sandbox-idp/auth");
-            var request = new RestRequest(Method.GET);
-            //request.AddHeader("cache-control", "no-cache");
-            //request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            //request.AddHeader("web-api-key", "b6ed089e-4679-4ce2-ac6a-84895d914720");
-            request.AddQueryParameter("state", "csas-auth");
-            request.AddQueryParameter("response_type", "code");
-            request.AddQueryParameter("client_id", "sandboxClientId");
-            request.AddQueryParameter("access_type", "online");
-            request.AddQueryParameter("approval_prompt", "force");
-            //request.AddParameter("application/x-www-form-urlencoded", "state=csas-auth&client_id=sandboxClientId&response_type=code&access_type=online&approval_prompt=force", ParameterType.RequestBody); // redirect_uri=http://localhost:54320&
+            //var client = new RestClient("https://api.developer.rb.cz/psd2-rbcz-sandbox-oauth2-api"); // RAIFFKA sandbox
+            //var client = new RestClient("https://api.developer.rb.cz/oauth2/authorize"); // RAIFFKA ostrý
+            var client = new RestClient("https://webapi.developers.erstegroup.com/api/csas/sandbox/v1/sandbox-idp"); // ČS náhradní
+            client.CookieContainer = new System.Net.CookieContainer();
+            //client.Authenticator = new ("client_id", "9049865d-cdb3-4b26-9b30-066d7a05f0a7", "response_type", "code");
+            var request = new RestRequest("authorize?state={state}&response_type={response_type}&client_id={client_id}&access_type={access_type}&approval_prompt={approval_prompt}", Method.GET);
+            request.AddParameter("state", "csas-auth", ParameterType.UrlSegment);
+            request.AddParameter("response_type", "code", ParameterType.UrlSegment);
+            //request.AddParameter("scope", "all", ParameterType.UrlSegment);
+            request.AddParameter("client_id", clientID, ParameterType.UrlSegment);
+            request.AddParameter("access_type", "online", ParameterType.UrlSegment);
+            request.AddParameter("approval_prompt", "force", ParameterType.UrlSegment);
             IRestResponse response = client.Execute(request);
+            var content = response.Content; // raw content as string
 
-
-            //List<string> scope = new List<string> { };
-            //WebServerClient consumer = new WebServerClient(server, clientID, clientSecret);
-            //// Here redirect to authorization site occurs
-
-            ////var token = consumer.ExchangeUserCredentialForToken(clientID, clientSecret);
-            //OutgoingWebResponse response = consumer.PrepareRequestUserAuthorization(
-            //    scope, new Uri(redirectUri));
-            //response.Headers.Add("web-api-key", "b6ed089e-4679-4ce2-ac6a-84895d914720");
-            //consumer.RequestUserAuthorization(scope, new Uri("http://localhost:54320/home/oauth2callback"));
-            //return response.AsActionResultMvc5();
-
-
+            //var request_token = new RestRequest("token?grand_type={grand_type}&code={code}&client_id={client_id}&client_secret={client_secret}", Method.POST);
+            var request_token = new RestRequest("token", Method.POST);
+            //request.AddHeader("web-api-key", "b6ed089e-4679-4ce2-ac6a-84895d914720");
+            request_token.AddParameter("grand_type", "authorization_code", ParameterType.RequestBody);
+            request_token.AddParameter("code", "test-code", ParameterType.RequestBody);
+            request_token.AddParameter("client_id", clientID, ParameterType.RequestBody);
+            request_token.AddParameter("client_secret", clientSecret, ParameterType.RequestBody);
+            IRestResponse response_token = client.Execute(request_token);
+            content = response_token.Content; // raw content as string
 
             return Content(response.Content);
         }
@@ -62,6 +61,7 @@ namespace APIClient.Controllers
             string accessToken = grantedAccess.AccessToken;
             return Content(accessToken);
         }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
